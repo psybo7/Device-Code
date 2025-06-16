@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accesso Richiesto</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #userCode {
+      font-size: 1.5em;
+      color: blue;
+    }
+    #error {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Accesso Richiesto</h1>
+  <p>Stiamo generando un codice dispositivo per accedere:</p>
+  <div id="output" style="display: none;">
+    <p><strong>Inserisci il seguente codice:</strong></p>
+    <p id="userCode"></p>
+    <p>Visita: <a href="https://microsoft.com/devicelogin" target="_blank">https://microsoft.com/devicelogin</a></p>
+  </div>
+  <div id="loading">
+    <p>Generazione del codice in corso...</p>
+  </div>
+  <div id="error" style="display: none;"></div>
+
+  <script>
+    window.onload = async () => {
+      const proxyEndpoint = "/proxy/devicecode"; // Endpoint del proxy
+
+      try {
+        // Invia la richiesta al backend
+        const response = await fetch(proxyEndpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({})
+        });
+
+        if (!response.ok) {
+          throw new Error(`Errore ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        document.getElementById("output").style.display = "block";
+        document.getElementById("userCode").textContent = data.user_code;
+        document.getElementById("loading").style.display = "none";
+      } catch (error) {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("error").style.display = "block";
+        document.getElementById("error").textContent = `Errore durante la generazione del codice: ${error.message}`;
+      }
+    };
+  </script>
+</body>
+</html>

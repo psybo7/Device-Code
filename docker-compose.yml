@@ -1,0 +1,33 @@
+services:
+  caddy:
+    image: caddy:alpine
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./html:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - flask
+
+  flask:
+    build:
+      context: ./flask
+    container_name: flask
+    environment:
+      - DEBUG=False
+      - CLIENT_ID=d3590ed6-52b3-4102-aeff-aad2292ab01c
+      - RESOURCE=https://graph.windows.net
+      - IPINFO_TOKEN=
+    ports:
+      - "5000"
+    volumes:
+      - ./flask_data:/app/data
+
+volumes:
+  caddy_data:
+  caddy_config:
+  flask_data:

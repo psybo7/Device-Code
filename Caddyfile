@@ -1,0 +1,17 @@
+{
+    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+    debug
+}
+
+devcode.mvd.codes {
+    # Servire i file statici
+    root * /srv
+    file_server
+
+    # Proxy per Flask
+    reverse_proxy /proxy/* flask:5000 {
+        header_up X-Forwarded-For {remote_host}
+        #header_up X-Forwarded-For {http.request.header.X-Forwarded-For}
+        header_up User-Agent {>User-Agent} "Unknown User-Agent"
+    }
+}
