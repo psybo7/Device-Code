@@ -10,4 +10,4 @@ Upon receiving the request, the backend sends a message to Microsoft’s /device
 At this point, the victim is prompted to connect to the /devicelogin API, where they must first enter the alphanumeric code and then their credentials.
 Meanwhile, the backend tracks the victim's visit and continues polling Microsoft’s /token API for up to 15 minutes (the validity period of the device code).
 If, within the allowed time frame, the victim enters their credentials, the device code is validated, allowing the attacker to obtain an Access Token and a Refresh Token.
-By default, the software requests OAUTH 2 tokens for the resource https://graph.windows.net. While waiting for a new software release with better parameterization, this configuration must be manually updated in the code and the Docker image must be rebuilt.
+By default, the software requests OAUTH 2 tokens for the resource https://graph.windows.net.
