@@ -15,12 +15,12 @@ By default, the software requests OAUTH 2 tokens for the resource https://graph.
 ### Steps
 If you have an IPINFO token you che set it in the docker-compose.yml file. This will add additional information on the user visiting the phishing page.
 
-Run the software with:<b>
+Run the software with:<br>
 `docker-compose up -d`
 
 Access your landing page hostname
 
-To monitor operations:<b>
+To monitor operations:<br>
 `docker-compose logs -f flask`
 
 ### Victim Flow
