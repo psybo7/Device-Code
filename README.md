@@ -11,3 +11,20 @@ At this point, the victim is prompted to connect to the /devicelogin API, where 
 Meanwhile, the backend tracks the victim's visit and continues polling Microsoft’s /token API for up to 15 minutes (the validity period of the device code).
 If, within the allowed time frame, the victim enters their credentials, the device code is validated, allowing the attacker to obtain an Access Token and a Refresh Token.
 By default, the software requests OAUTH 2 tokens for the resource https://graph.windows.net.
+
+### Steps
+Run the software with:
+`docker-compose up -d`
+
+Access your landing page hostname
+
+To monitor operations:
+`docker-compose logs -f flask`
+
+### Victim Flow
+1. Victim visits phishing page
+2. JS requests /proxy/devicecode → Flask generates USER_CODE
+3. Victim enters code at https://microsoft.com/devicelogin
+4. Backend polls /token → Captures Access/Refresh tokens in ./flask_data/
+5. Tokens logged and saved to SQLite/file when victim authenticates (15min window).
+
