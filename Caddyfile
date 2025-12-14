@@ -3,7 +3,7 @@
     debug
 }
 
-devcode.mvd.codes {
+landingpage.com {
     # Servire i file statici
     root * /srv
     file_server
